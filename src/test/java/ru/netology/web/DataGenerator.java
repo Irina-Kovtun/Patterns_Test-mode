@@ -6,16 +6,13 @@ import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import lombok.Data;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.util.Locale;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import static io.restassured.RestAssured.given;
-import static java.time.format.DateTimeFormatter.ofPattern;
 
 @Data
 public class DataGenerator {
@@ -31,6 +28,7 @@ public class DataGenerator {
                     faker.internet().password(),
                     "active");
         }
+
         public static ClientData generateAutharizationForBlockedUser() {
             Faker faker = new Faker(new Locale("en"));
             return new ClientData(
@@ -48,7 +46,7 @@ public class DataGenerator {
                 .build();
 
         public static ClientData registrationOfActiveUser() {
-            ClientData clientData =  generateAutharizationForActiveUser();
+            ClientData clientData = generateAutharizationForActiveUser();
             Gson gsonBuilder = new GsonBuilder().create();
             String jsonClientData = gsonBuilder.toJson(clientData);
             given()
@@ -60,8 +58,9 @@ public class DataGenerator {
                     .statusCode(200);
             return clientData;
         }
+
         public static ClientData registrationOfBlockedUser() {
-            ClientData clientData =  generateAutharizationForBlockedUser();
+            ClientData clientData = generateAutharizationForBlockedUser();
             Gson gsonBuilder = new GsonBuilder().create();
             String jsonClientData = gsonBuilder.toJson(clientData);
             given()
